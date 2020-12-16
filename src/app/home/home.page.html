@@ -1,0 +1,86 @@
+<!-- Header section -->
+<ion-header [translucent]="true">
+  <ion-toolbar no-margin>
+    <ion-title>
+      Daily Motion
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- search bar -->
+  <ion-searchbar 
+    #search
+    slot="fixed"
+    inputmode="search"
+    animated
+    debounce="3000"
+    (ionChange)="_ionChange($event)" 
+    placeholder="Eg., Covid-19, Blockchain, AI">
+  </ion-searchbar>
+  <ion-chip color="primary" slot="fixed">Page: {{page}}, Showing: {{limit}}</ion-chip>
+
+  <!-- Data sync button to refresh app with the latest feed -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="syncData()">
+      <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+      <ion-icon *ngIf="!isLoading" name="sync-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  <!-- Skeleton text card, display before data fetched-->
+  <div *ngIf="!(videoList | async)?.list">
+    <ion-card>
+      <ion-skeleton-text class="skeleton-image" animated></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+    
+    <ion-card>
+      <ion-skeleton-text class="skeleton-image" animated></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+  
+    <ion-card>
+      <ion-skeleton-text class="skeleton-image" animated></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card>
+      <ion-skeleton-text class="skeleton-image" animated></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+  </div>
+
+  <!-- Card to display a video object-->
+  <ion-card class="video-card" [routerLink]="['/video-detail', video.id]"
+    button *ngFor="let video of (videoList | async)?.list">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <ion-badge color="default">ID: {{video.id}}</ion-badge>
+      </ion-card-subtitle>
+      <ion-card-title>{{video.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-badge color="primary">Author: {{video.id}}</ion-badge>
+    </ion-card-content>
+  </ion-card>
+  
+  <!-- Infinite scroll -->
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreVideos($event)">
+    <ion-infinite-scroll-content loadingSpinner="circular">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  
+</ion-content>

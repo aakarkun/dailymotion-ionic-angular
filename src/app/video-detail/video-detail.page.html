@@ -1,0 +1,66 @@
+<!-- Header section -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Video Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <!-- Skeleton text card -->
+  <div *ngIf="!videoDetail">
+    <ion-card>
+      <ion-skeleton-text class="skeleton-image" animated></ion-skeleton-text>
+      <ion-card-header>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-card-header>
+    </ion-card>
+    <ion-card>
+      <ion-list>
+        <ion-item>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-item>
+        <ion-item>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-item>
+        <ion-item>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
+
+  <!-- Video header section with its channel name -->
+  <ion-card *ngIf="videoDetail">
+    <ion-card-header>
+      <ion-card-title>
+        {{(videoDetail | async)?.title}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-chip>{{(videoDetail | async)?.channel}}</ion-chip>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Video other details section -->
+  <ion-card *ngIf="videoDetail">
+    <ion-list>
+      <ion-item>
+        <ion-label>ID</ion-label>
+        <ion-chip color="primary">{{(videoDetail | async)?.id}}</ion-chip>
+      </ion-item>
+      <ion-item>
+        <ion-label>Owner</ion-label>
+        <ion-chip color="primary">{{(videoDetail | async)?.owner}}</ion-chip>
+      </ion-item>
+      <ion-item>
+        <ion-label>Channel</ion-label>
+        <ion-chip color="primary">{{(videoDetail | async)?.channel}}</ion-chip>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>
